@@ -34,7 +34,7 @@ def reposync():
     Download the repo packages to be scanned
     '''
     dest = os.path.join(__opts__['cachedir'], 'archpkg')
-    if not os.path.isdir():
+    if not os.path.isdir(dest):
         os.makedirs(dest)
     cmd = 'rsync -rtlvH --delete-after --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_linux_mirror'], dest)
     subprocess.check_output(cmd)
