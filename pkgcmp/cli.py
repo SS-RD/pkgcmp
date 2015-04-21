@@ -11,7 +11,8 @@ import pkgcmp.scan
 import yaml
 
 DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
-            'extension_modules': ''}
+            'extension_modules': '',
+            'skip_sync': False}
 
 
 def parse():
@@ -24,6 +25,11 @@ def parse():
             dest='cachedir',
             default=None,
             help='The location to store all the files while working')
+    parser.add_argument(
+            '--skip-sync',
+            dest='skip_sync',
+            default=None,
+            help='Skip the part where we download all the packages')
     parser.add_argument(
             '--config',
             dest='config',
