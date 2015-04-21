@@ -10,7 +10,8 @@ import pkgcmp.scan
 # Import third party libs
 import yaml
 
-DEFAULTS = {'cachedir': '/var/cache/pkgcmp'}
+DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
+            'extension_modules': ''}
 
 
 def parse():
