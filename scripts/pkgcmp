@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import pkgcmp.cli
+
+
+def main():
+    cli = pkgcmp.cli.PkgCmp()
+    cli.run()
+
+
+if __name__ == '__main__':
+    main()
