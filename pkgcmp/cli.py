@@ -10,7 +10,7 @@ import pkgcmp.scan
 # Import third party libs
 import yaml
 
-DEFAULTS = {}
+DEFAULTS = {'cachedir': '/var/cache/pkgcmp'}
 
 
 def parse():
@@ -18,6 +18,11 @@ def parse():
     Parse!!
     '''
     parser = argparse.ArgumentParser(description='The pkgcmp map generator')
+    parser.add_argument(
+            '--cachedir',
+            dest='cachedir',
+            default=None,
+            help='The location to store all the files while working')
     parser.add_argument(
             '--config',
             dest='config',
