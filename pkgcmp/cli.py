@@ -44,8 +44,8 @@ def config(cfn):
     if os.path.isfile(cfn):
         with open(cfn, 'r') as cfp:
             conf = yaml.safe_load(cfp)
-            print(conf)
-            ret.update(conf)
+            if isinstance(conf, dict):
+                ret.update(conf)
     return ret
 
 
