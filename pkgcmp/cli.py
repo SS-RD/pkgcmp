@@ -13,6 +13,7 @@ import yaml
 DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
             'extension_modules': '',
             'skip_sync': False,
+            'skip_db_init': False,
             'arch_linux_mirror': 'rsync://mirrors.kernel.org/archlinux'}
 
 
@@ -31,6 +32,11 @@ def parse():
             dest='skip_sync',
             default=None,
             help='Skip the part where we download all the packages')
+    parser.add_argument(
+            '--skip-db-init',
+            dest='skip_db_init',
+            default=None,
+            help='Skip creating the database')
     parser.add_argument(
             '--config',
             dest='config',
