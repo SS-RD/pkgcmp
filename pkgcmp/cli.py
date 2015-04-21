@@ -5,6 +5,8 @@ Parse CLI options
 import os
 import copy
 import argparse
+# Import pkgcmp libs
+import pkgcmp.scan
 # Import third party libs
 import yaml
 
@@ -40,3 +42,15 @@ def config(cfn):
             print(conf)
             ret.update(conf)
     return ret
+
+
+class PkgCmp:
+    '''
+    Build and run the application
+    '''
+    def __init__(self):
+        self.opts = parse()
+        self.scan = pkgcmp.scan.Scanner(self.opts)
+
+    def run(self):
+        self.scan.run()
