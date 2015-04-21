@@ -54,6 +54,9 @@ def scanpkg(path):
     cmd = 'tar xvf {0}'.format(path)
     subprocess.check_output(cmd)
     ret.update(_parse_pkginfo(os.path.join(tmp, '.PKGINFO')))
+    ret['distro'] = 'arch'
+    ret['name'] = ret['pkgname']
+    ret['version'] = ret['pkgver']
     for root, dirs, files in os.walk(tmp):
         for fn_ in files:
             full = os.path.join(root, fn_)
