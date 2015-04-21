@@ -26,7 +26,7 @@ def _parse_pkginfo(path):
             if not line.find('='):
                 continue
             key, val = line.split('=')
-            ret[key] = val
+            ret[key.strip()] = val.strip()
     return ret
 
 def reposync():
@@ -36,8 +36,8 @@ def reposync():
     dest = os.path.join(__opts__['cachedir'], 'archpkg')
     if not os.path.isdir(dest):
         os.makedirs(dest)
-    cmd = 'rsync -rtlvH --delete-after --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_linux_mirror'], dest)
-    subprocess.check_output(cmd, shell=True)
+    cmd = 'rsync -rtlvH --delete-after --include "*/" --include "pool/**" --exclude "*" --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_linux_mirror'], dest)
+    subprocess.call(cmd, shell=True)
 
 
 def scanpkg(path):
@@ -45,11 +45,11 @@ def scanpkg(path):
     Extract a single package to a temporary location, scan the contents and return the content data
     '''
     ret = {}
-    files = []
-    dirs = []
-    tmp = tempfile.mkdtemp(__opts__['cachedir'])
+    f_ret = []
+    d_ret = []
+    tmp = tempfile.mkdtemp(prefix=__opts__['cachedir'])
     shutil.copy(path, tmp)
-    orig = os.pwd()
+    orig = os.getcwd()
     os.chdir(tmp)
     cmd = 'tar xvf {0}'.format(path)
     subprocess.check_output(cmd, shell=True)
@@ -58,14 +58,18 @@ def scanpkg(path):
     ret['name'] = ret['pkgname']
     ret['version'] = ret['pkgver']
     for root, dirs, files in os.walk(tmp):
+        print(root)
+        print(dirs)
+        print(files)
         for fn_ in files:
             full = os.path.join(root, fn_)
-            files.append(full[len(tmp):])
+            print(full)
+            f_ret.append(full[len(tmp):])
         for dn_ in dirs:
             full = os.path.join(root, dn_)
-            dirs.append(full[len(tmp):])
-    ret['files'] = files
-    ret['dirs'] = dirs
+            d_ret.append(full[len(tmp):])
+    ret['files'] = f_ret
+    ret['dirs'] = d_ret
     os.chdir(orig)
     shutil.rmtree(tmp)
     return ret
