@@ -12,7 +12,8 @@ import yaml
 
 DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
             'extension_modules': '',
-            'skip_sync': False}
+            'skip_sync': False,
+            'arch_linux_mirror': 'rsync://mirrors.kernel.org/archlinux'}
 
 
 def parse():
