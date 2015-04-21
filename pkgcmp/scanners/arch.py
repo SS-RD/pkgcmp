@@ -37,7 +37,7 @@ def reposync():
     if not os.path.isdir(dest):
         os.makedirs(dest)
     cmd = 'rsync -rtlvH --delete-after --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_linux_mirror'], dest)
-    subprocess.check_output(cmd)
+    subprocess.check_output(cmd, shell=True)
 
 
 def scanpkg(path):
@@ -52,7 +52,7 @@ def scanpkg(path):
     orig = os.pwd()
     os.chdir(tmp)
     cmd = 'tar xvf {0}'.format(path)
-    subprocess.check_output(cmd)
+    subprocess.check_output(cmd, shell=True)
     ret.update(_parse_pkginfo(os.path.join(tmp, '.PKGINFO')))
     ret['distro'] = 'arch'
     ret['name'] = ret['pkgname']
