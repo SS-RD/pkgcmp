@@ -36,7 +36,7 @@ def reposync():
     dest = os.path.join(__opts__['cachedir'], 'archpkg')
     if not os.path.isdir(dest):
         os.makedirs(dest)
-    cmd = 'rsync -rtlvH --delete-after --include "*/" --include "pool/**" --exclude "*" --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_linux_mirror'], dest)
+    cmd = 'rsync -rtlvH --delete-after --include "*/" --include "pool/**" --exclude "*" --delay-updates --safe-links --max-delete=1000 {0} {1}'.format(__opts__['arch_repo'], dest)
     subprocess.call(cmd, shell=True)
 
 

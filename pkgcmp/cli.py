@@ -14,7 +14,12 @@ DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
             'extension_modules': '',
             'skip_sync': False,
             'skip_db_init': False,
-            'arch_linux_mirror': 'rsync://mirrors.kernel.org/archlinux'}
+            'arch_repo': 'rsync://mirrors.kernel.org/archlinux',
+            'cent_repo': '',
+            'debian_repo': '',
+            'ubuntu_repo': '',
+            'fedora_repo': ''}
+DISTROS = ['arch', 'redhat', 'debian']
 
 
 def parse():
@@ -42,11 +47,21 @@ def parse():
             dest='config',
             default='/etc/pkgcmp/pkgcmp',
             help='The location of the pkgcmp config file')
+    for distro in DISTROS:
+        parser.add_argument(
+                '--{0}'.format(distro),
+                dest=distro,
+                default=None,
+                help='Process {0} entry points'.format(distro))
     opts = parser.parse_args().__dict__
     conf = config(opts['config'])
     for key in opts:
         if opts[key] is not None:
             conf[key] = opts[key]
+    opts['distros'] = []
+    for dist in DISTROS:
+        if opts[dist]:
+            opts['distros'].append(dist)
     return conf
 
 

@@ -13,24 +13,14 @@ class Scanner:
         self.dbs = pkgcmp.dbs.dbs(self.opts)
         self.db = self.opts.get('db', 'sorbic')
 
-    def _distros(self):
-        '''
-        return a list of distros
-        '''
-        ret = set()
-        for func in self.scanners:
-            if '.' in func:
-                mod, fun = func.split('.')
-                ret.add(mod)
-        return sorted(ret)
-
     def reposync(self):
         '''
         run all the plugin reposync funcs
         '''
-        for func in self.scanners:
-            if func.endswith('.reposync'):
-                self.scanners[func]()
+        for distro in self.opts['distros']:
+            fun = '{0}.reposync'.format(distro)
+            if fun in self.scanners:
+                self.scanners[fun]()
 
     def db_update(self, distro):
         '''
@@ -56,5 +46,5 @@ class Scanner:
             self.reposync()
         if not self.opts['skip_db_init']:
             self.init_db()
-        for distro in self._distros():
+        for distro in self.opts['distros']:
             self.db_update(distro)
