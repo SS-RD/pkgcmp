@@ -23,9 +23,9 @@ def _parse_pkginfo(path):
             line = line.strip()
             if line.startswith('#'):
                 continue
-            if not line.find('='):
+            if '=' not in line:
                 continue
-            key, val = line.split('=')
+            key, val = line.split('=', 1)
             ret[key.strip()] = val.strip()
     return ret
 
@@ -58,12 +58,8 @@ def scanpkg(path):
     ret['name'] = ret['pkgname']
     ret['version'] = ret['pkgver']
     for root, dirs, files in os.walk(tmp):
-        print(root)
-        print(dirs)
-        print(files)
         for fn_ in files:
             full = os.path.join(root, fn_)
-            print(full)
             f_ret.append(full[len(tmp):])
         for dn_ in dirs:
             full = os.path.join(root, dn_)
