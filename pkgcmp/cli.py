@@ -10,6 +10,7 @@ import pkgcmp.scan
 # Import third party libs
 import yaml
 
+DISTROS = ['arch', 'redhat', 'debian']
 DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
             'extension_modules': '',
             'skip_sync': False,
@@ -19,7 +20,8 @@ DEFAULTS = {'cachedir': '/var/cache/pkgcmp',
             'debian_repo': '',
             'ubuntu_repo': '',
             'fedora_repo': ''}
-DISTROS = ['arch', 'redhat', 'debian']
+for dist in DISTROS:
+    DEFAULTS[dist] = None
 
 
 def parse():
@@ -58,10 +60,10 @@ def parse():
     for key in opts:
         if opts[key] is not None:
             conf[key] = opts[key]
-    opts['distros'] = []
+    conf['distros'] = []
     for dist in DISTROS:
-        if opts[dist]:
-            opts['distros'].append(dist)
+        if conf[dist]:
+            conf['distros'].append(dist)
     return conf
 
 
