@@ -11,7 +11,7 @@ class Scanner:
         self.opts = opts
         self.scanners = pkgcmp.scanners.scanners(self.opts)
         self.dbs = pkgcmp.dbs.dbs(self.opts)
-        self.db = self.opts.get('db', 'sqlite')
+        self.db = self.opts.get('db', 'sorbic')
 
     def _distros(self):
         '''
